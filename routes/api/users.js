@@ -5,7 +5,7 @@ const User = require('../../models/User');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 
-router.get('/test', (req, res) => res.json({msg: "users works"}));
+router.get('/test', (req, res) => res.json({msg:req.body}));
 
 router.post('/register', (req, res) => {
     User.findOne({email: req.body.email}).then(user => {
@@ -48,7 +48,7 @@ router.post('/login', (req, res) => {
         .then(user => {
            //check for user
             if(!user){
-                return res.status(404).json({email: 'User not found'});
+                return res.status(404).json({msg: 'User not found'});
             }
             //Check password
             bcrypt.compare(password, user.password)
