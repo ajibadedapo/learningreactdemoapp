@@ -4,6 +4,7 @@ const router = express.Router();
 const User = require('../../models/User');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 router.get('/test', (req, res) => res.json({msg:req.body}));
 
@@ -60,6 +61,11 @@ router.post('/login', (req, res) => {
                     }
                 });
         });
+});
+
+
+router.get('/current', passport.authenticate('jwt', {session: false}), () => {
+    res.json({msg: 'Success'});
 });
 
 module.exports = router;
